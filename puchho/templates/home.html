@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Puchho</title>
+<meta charset="UTF-8">
+</head>
+<body>
+{% if session['username'] %}
+<h6>Hi {{session['username']}} !</h6>
+<form action="logout">
+    <button type="submit">Logout</button>
+</form>
+{%else%}
+<form action="login_form">
+	<button type="submit">Login</button>
+	
+</form>
+{%endif%}
+</body>
+</html>

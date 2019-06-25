@@ -1,0 +1,133 @@
+@import url( "http://fonts.googleapis.com/css?family=Open+Sans:400,300" );
+
+* { margin: 0; padding: 0; }
+
+html
+{
+	/*background: #C7B7A7 url( "http://oi64.tinypic.com/i3zbs7.jpg" );*/
+	height: 100%;
+	-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 );
+}
+
+h1
+{
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	margin-top: 15px;
+	text-align: right;
+}
+
+h1 a { color: #888; text-decoration: none; }
+
+.main_menu
+{
+	position: relative;
+	top: 0px;
+	width: 250px;
+	margin: 0 auto;
+	/*background-color: green;*/
+}
+
+#admin
+{
+	background: #F8F8F8;
+	width: 240px;
+	height: 40px;
+	color: #888;
+	border: none;
+	border-radius: 3px;
+	padding: 0 0 0 10px;
+	font: bold 13px Helvetica, sans-serif;
+	text-transform: uppercase;
+	line-height: 41px;
+	cursor: default;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	margin-bottom: 7px;
+	box-shadow: 0 1px 1px rgba( 0, 0, 0, 0.2 );
+}
+
+#settings
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px 14px 0 0;
+	border: none;
+	outline: none;
+	color: #888;
+	font-size: 20px;
+}
+
+#admin_settings, #settings { cursor: pointer; }
+
+#settings:hover { color: #555; }
+
+#menu { display: none; }
+
+#menu a
+{
+	display: block;
+	background: #F8F8F8;
+	width: 240px;
+	height: 40px;
+	padding: 0 0 0 10px;
+	font: bold 13px Helvetica, sans-serif;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: rgba(0, 0, 0, 0.4);
+	line-height: 40px;
+	box-shadow: 0 1px 1px rgba( 0, 0, 0, 0.2 );
+}
+
+#menu a:nth-child( 2 )
+{
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+#menu a:last-child
+{
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+#menu a:hover { color: #555; }
+
+#menu a:hover > .octicon { color: #555; }
+
+#icon
+{
+	float: right;
+	margin-top: 10px;
+	font-size: 20px;
+	color: rgba( 0, 0, 0, 0.4 );
+	opacity: 0.8;
+}
+
+.octicon-person { margin-right: 16px; }
+.octicon-graph { margin-right: 11px; }
+.octicon-cloud-upload { margin-right: 11px; }
+.octicon-pencil { margin-right: 13px; }
+.octicon-gear{
+	margin-right: 30px;
+	margin-top: 20px;
+	background: url(../images/settings_icon.png)no-repeat center;
+}
+
+#arrow
+{
+	width: 0;
+	height: 0;
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	border-bottom: 9px solid #F8F8F8;
+	margin-left: 15px;
+}
+
+.field{
+	float: right;
+}

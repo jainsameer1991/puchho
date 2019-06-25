@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{{title}} Queries-Puchho</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Tab Widget Form template Responsive, Login form web template,Flat Pricing tables,Flat Drop downs  Sign up Web Templates, Flat Web Templates, Login sign up Responsive web template, SmartPhone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+
+	<link href= "{{ url_for('static',filename='css/header_footer.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+	<!--
+	<link href= "{{ url_for('static',filename='css/puchho.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+      -->
+</head>
+<body>
+	<!-- <div align="right"><h2>Hi {{username}}!</h2></div><hr> -->
+	<!-- <h1>{{title}} Queries</h1> -->
+	<header class="header-user-dropdown">
+
+		<div class="header-limiter">
+			<h1><a href="{{url_for('puchho',user_id=session['user_id'])}}">Puchho.com</a></h1>
+
+			<nav>
+				<a href="{{url_for('seekho')}}">SEEKHO CORNER</a>
+
+			</nav>
+			<nav>
+				<a href="{{url_for('about_us')}}">ABOUT US</a>
+
+			</nav>
+			<nav>
+
+     			<a href="#">FAQ</a>
+
+			</nav>
+			<nav>
+				<a href="{{url_for('contact_us')}}">CONTACT</a>
+			</nav>
+			<div class="header-user-menu">
+				{% if session['username'] %}
+					<h4>{{session['username']}}</h4>
+					<ul>
+
+						<li><a href="{{url_for('dashboard',user_id=session['user_id'])}}">Dashboard<span id="icon" class="octicon octicon-graph"></span></a></li>
+			            <li><a href="{{url_for('account_settings',user_id=session['user_id'])}}">Account Settings <span id="icon" class="octicon octicon-cloud-upload"></span></a></li>
+			            <li><a href="{{url_for('logout')}}">Log Out <span id="icon" class="octicon octicon-pencil"></span></a></li>
+					</ul>
+				{%else%}
+					<a href="{{url_for('login_form')}}">Login/Sign Up</a>
+					<!-- <form action="login_form">
+						<button type="submit">Login</button>
+					</form> -->
+				{%endif%}
+
+
+			</div>
+
+		</div>
+
+	</header>
+	<div class="body_container">
+		{%for pquery in skill_query_list%}
+		<div>
+			<a href="{{url_for('query',query_id=pquery['id'],visible=1)}}">
+			<h3>{{pquery['message']}}</h3></a><hr>
+			<br>
+		</div>
+		{%endfor%}
+	</div>
+	<footer class="footer-basic-centered">
+        <p class="footer-company-motto"><i>Puchhte Jao... Seekhte Jao...</i></p>
+
+    	<p class="footer-company-name">Puchho.com &copy; 2016. All rights reserved</p>
+
+  	</footer>
+</body>
+</html>

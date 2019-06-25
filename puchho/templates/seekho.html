@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Puchho</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Tab Widget Form template Responsive, Login form web template,Flat Pricing tables,Flat Drop downs  Sign up Web Templates, Flat Web Templates, Login sign up Responsive web template, SmartPhone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+
+	<link href= "{{ url_for('static',filename='css/header_footer.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+	<!--
+	<link href= "{{ url_for('static',filename='css/puchho.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+      -->
+      <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <link href= "{{ url_for('static',filename='css/tagsort.min.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+
+	<script type="text/javascript">
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+
+	<script type="application/x-javascript">
+		addEventListener("load", function() {
+			setTimeout(hideURLbar, 0);
+		}, false); function hideURLbar(){
+			window.scrollTo(0,1);
+		}
+	</script>
+
+	<script src= "{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+	<script src= "{{ url_for('static',filename='js/easyResponsiveTabs.js') }}" type="text/javascript"></script>
+
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='js/autocomplete.js')}}">
+
+	</script>
+
+
+
+	<script src="{{url_for('static',filename='js/jquery.min.js')}}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{url_for('static',filename='js/tagsort.min.js')}}" type="text/javascript" charset="utf-8"></script>
+
+	<script>
+	$(function(){
+		$('div.tags-container').tagSort({selector:'.item', tagWrapper:'span', displaySelector: '.item-tags', displaySeperator: ' / ', inclusive: false, fadeTime:200});
+	});
+	</script>
+	<style>
+		html,body {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background-color: #FFF;
+			font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+   			font-weight: 300;
+		}
+		.container {
+			width: 80%;
+			margin: 0 auto;
+		}
+		h1 > small a {
+			color: #AAA;
+			text-decoration: none;
+			font-size: 70%;
+			margin-left: 10px;
+		}
+		h1 > small a:hover {
+			color: #000;
+		}
+		.item {
+			box-sizing: border-box;
+			float: left;
+			position: relative;
+		    min-height: 1px;
+		    padding-left: 15px;
+		    padding-right: 15px;
+		    /*width: 20%;*/
+		    margin-bottom: 40px;
+		    height: 200px;
+		    max-height: 360px;
+		    overflow: hidden;
+
+		}
+		.item .wrapper {
+			background-color: #f4f4f4;
+			padding: 8px;
+			height: 100%;
+		}
+		.item .wrapper img {
+			width: 100%;
+		}
+		.item .wrapper .item-tags {
+			color: #AAA;
+			font-size: 12px;
+			line-height: 1.8;
+		}
+		.tagsort-tags-container {
+			margin: 40px 0;
+		}
+
+	</style>
+</head>
+<body>
+	<header class="header-user-dropdown">
+
+		<div class="header-limiter">
+			<h1><a href="{{url_for('puchho',user_id=session['user_id'])}}">Puchho.com</a></h1>
+
+			<nav>
+				<a href="{{url_for('seekho')}}">SEEKHO CORNER</a>
+
+			</nav>
+			<nav>
+				<a href="{{url_for('about_us')}}">ABOUT US</a>
+
+			</nav>
+			<nav>
+
+     			<a href="#">FAQ</a>
+
+			</nav>
+			<nav>
+				<a href="{{url_for('contact_us')}}">CONTACT</a>
+			</nav>
+			<div class="header-user-menu">
+				{% if session['username'] %}
+					<h4>{{session['username']}}</h4>
+					<ul>
+
+						<li><a href="{{url_for('dashboard',user_id=session['user_id'])}}">Dashboard<span id="icon" class="octicon octicon-graph"></span></a></li>
+			            <li><a href="{{url_for('account_settings',user_id=session['user_id'])}}">Account Settings <span id="icon" class="octicon octicon-cloud-upload"></span></a></li>
+			            <li><a href="{{url_for('logout')}}">Log Out <span id="icon" class="octicon octicon-pencil"></span></a></li>
+					</ul>
+				{%else%}
+					<a href="{{url_for('login_form')}}">Login/Sign Up</a>
+					<!-- <form action="login_form">
+						<button type="submit">Login</button>
+					</form> -->
+				{%endif%}
+
+
+			</div>
+
+		</div>
+
+	</header>
+	<div class="body_container">
+
+		<div class="container">
+			<div class="tags-container row tagsort-tags-container">
+			</div>
+			<!-- <div style="display: block;" class="item col-md-3" data-item-id="3" data-item-tags="MySQL,Node.js,Python,JavaScript,React,Java,Cassandra">
+				<div class="wrapper">
+					<img src="images/netflix.jpg" alt="Netflix">
+					<h2>Netflix</h2>
+					<p class="item-tags">MySQL / Node.js / Python / JavaScript / React / Java / Cassandra</p>
+				</div>
+			</div> -->
+			{%for temp_doc in doc_list%}
+			<div style="display: block;" class="item col-md-3" data-item-id="
+			{{temp_doc['id']}}" data-item-tags="{{temp_doc['skills_name_list']}}">
+				<div class="wrapper">
+					<!-- <img src="images/uber.jpg" alt="Uber"> -->
+					<h2>{{temp_doc['title']}}</h2>
+					<a href="/uploads/{{temp_doc['file_name']}}">{{temp_doc['file_name']}}</a>
+					<p class="item-tags"></p>
+				</div>
+			</div>
+			{%endfor%}
+		</div>
+	</div>
+	<footer class="footer-basic-centered">
+        <p class="footer-company-motto"><i>Puchhte Jao... Seekhte Jao...</i></p>
+
+    	<p class="footer-company-name">Puchho.com &copy; 2016. All rights reserved</p>
+
+  	</footer>
+
+</body>
+</html>

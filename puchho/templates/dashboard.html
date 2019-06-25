@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Dashboard-Puchho</title>
+	<link href= "{{ url_for('static',filename='css/header_footer.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+	<!-- <link href= "{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css" media="all" /> -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href= "{{ url_for('static',filename='css/menu.css') }}" rel="stylesheet" type="text/css" media="all" />
+  <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
+  <link href= "{{ url_for('static',filename='css/jquery.sf-flash1.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+  <script type="text/javascript"   src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript" src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script type="text/javascript">
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script>
+    var availableTutorials=JSON.parse({{rem|tojson|safe}});
+    var a={};
+    a['C']=1;
+    a['C++']=2;
+    a['Java']=3;
+    a['Python']=4;
+    var availableProfiles=JSON.parse({{rem_social|tojson|safe}});
+  </script>
+	<script>
+    // var availableTutorials={{skill_list}};
+    // var availableTutorials = [
+		  //    	"C",
+    //      	"C++",
+    //       "Java",
+    //       "Python",
+    //   ];
+  //     var availableProfiles = [
+		// "LinkedIn",
+		// "Facebook",
+  //        	"Twitter",
+  //     ];
+		$(document).ready(function() {
+			$(document).on("click", ".datepicker-13" , function() {
+			    $('#'+this.id).datepicker();
+
+          $( '#'+this.id).datepicker("show");
+      });
+      $(document).on("click", ".datepicker-15" , function() {
+          $('#'+this.id).datepicker();
+
+          $( '#'+this.id).datepicker("show");
+      });
+      $(document).on("click",".skill_list",function(){
+				$( "#automplete-1" ).autocomplete({
+             source: availableTutorials
+
+          });
+			});
+			$(document).on("click",".profile_list",function(){
+				$( "#automplete-profile" ).autocomplete({
+             source: availableProfiles
+          });
+			});
+    });
+	</script>
+
+  </head>
+
+<body>
+
+  <header class="header-user-dropdown">
+
+    <div class="header-limiter">
+      <h1><a href="{{url_for('puchho',user_id=session['user_id'])}}">Puchho.com</a></h1>
+
+      <nav>
+        <a href="{{url_for('seekho')}}">SEEKHO CORNER</a>
+
+      </nav>
+      <nav>
+        <a href="{{url_for('about_us')}}">ABOUT US</a>
+
+      </nav>
+      <nav>
+
+          <a href="#">FAQ</a>
+
+      </nav>
+      <nav>
+        <a href="{{url_for('contact_us')}}">CONTACT</a>
+      </nav>
+      <div class="header-user-menu">
+        {% if session['username'] %}
+          <h4>{{session['username']}}</h4>
+          <ul>
+
+            <li><a href="{{url_for('dashboard',user_id=session['user_id'])}}">Dashboard<span id="icon" class="octicon octicon-graph"></span></a></li>
+                  <li><a href="{{url_for('account_settings',user_id=session['user_id'])}}">Account Settings <span id="icon" class="octicon octicon-cloud-upload"></span></a></li>
+                  <li><a href="{{url_for('logout')}}">Log Out <span id="icon" class="octicon octicon-pencil"></span></a></li>
+          </ul>
+        {%else%}
+          <a href="{{url_for('login_form')}}">Login/Sign Up</a>
+          <!-- <form action="login_form">
+            <button type="submit">Login</button>
+          </form> -->
+        {%endif%}
+
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <script>
+
+    $(document).ready(function(){
+
+      var userMenu = $('.header-user-dropdown .header-user-menu');
+
+      userMenu.on('touchend', function(e){
+
+        userMenu.addClass('show');
+
+        e.preventDefault();
+        e.stopPropagation();
+
+      });
+
+      // This code makes the user dropdown work on mobile devices
+
+      $(document).on('touchend', function(e){
+
+        // If the page is touched anywhere outside the user menu, close it
+        userMenu.removeClass('show');
+
+      });
+
+    });
+
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#add_work').click(function(){
+
+        $("#table_work tbody").append(
+          "<tr>"+
+          "<td><input type='checkbox'/></td>"+
+          "<td><input type='text' class='datepicker-13' id='datepicker-13'></td>"+
+          "<td><input type='text' class='datepicker-13' id='datepicker-14'></td>"+
+          "<td><input type='text'/></td>"+
+          "<td><input type='text'/></td>"+
+          "<td><input type='text'/></td>"+
+          "<td><img src='{{url_for('static',filename='images/disk.png')}}' class='btnSaveWork'><img src='{{url_for('static',filename='images/delete.png')}}' class='delete_work_row'/></td>"+
+          "</tr>"
+        );
+
+      });
+      $('body').on('click', '.btnSaveWork', function() {
+
+        var par = $(this).parent().parent(); //tr
+        var tdWorkHere = par.children("td:nth-child(1)");
+        var tdWorkStartDate = par.children("td:nth-child(2)");
+        var tdWorkEndDate = par.children("td:nth-child(3)");
+        var tdWorkOrganization = par.children("td:nth-child(4)");
+        var tdWorkDesignation = par.children("td:nth-child(5)");
+        var tdWorkDescription = par.children("td:nth-child(6)");
+        var tdWorkButtons = par.children("td:nth-child(7)");
+
+        var x=tdWorkHere.children("input[type=checkbox]").is(":checked");
+
+        var y=0;
+        if(x){
+          y=1;
+        }
+        $.getJSON($SCRIPT_ROOT + '/submit_user_work', {
+            cur_work:y,
+            st_date:tdWorkStartDate.children("input[type=text]").val(),
+            end_date:tdWorkEndDate.children("input[type=text]").val(),
+            org:tdWorkOrganization.children("input[type=text]").val(),
+            des:tdWorkDesignation.children("input[type=text]").val(),
+            dis:tdWorkDescription.children("input[type=text]").val()
+        }, function(data) {
+            var html_code="<input type='checkbox' checked='true' disabled='true'/>";
+            if(!(tdWorkHere.children("input[type=checkbox]").is(":checked"))){
+
+              html_code=html_code.replace("checked='true'","");
+            }
+            tdWorkHere.html(html_code);
+
+            tdWorkStartDate.html(tdWorkStartDate.children("input[type=text]").val());
+
+            tdWorkEndDate.html(tdWorkEndDate.children("input[type=text]").val());
+            tdWorkOrganization.html(tdWorkOrganization.children("input[type=text]").val());
+            tdWorkDesignation.html(tdWorkDesignation.children("input[type=text]").val());
+            tdWorkDescription.html(tdWorkDescription.children("input[type=text]").val());
+            tdWorkButtons.html("<img src='{{url_for('static',filename='images/delete.png')}}' class='delete_work'/><img src='{{url_for('static',filename='images/pencil.png')}}' class='edit_work'/>");
+
+        });
+        return false;
+      });
+      $('body').on('click', '.delete_work', function() {
+
+        var par = $(this).parent().parent(); //tr
+        var tdWorkHere = par.children("td:nth-child(1)");
+        var tdWorkStartDate = par.children("td:nth-child(2)");
+        var tdWorkEndDate = par.children("td:nth-child(3)");
+        var tdWorkOrganization = par.children("td:nth-child(4)");
+        var tdWorkDesignation = par.children("td:nth-child(5)");
+        var tdWorkDescription = par.children("td:nth-child(6)");
+        var tdWorkButtons = par.children("td:nth-child(7)");
+
+        var x=tdWorkHere.children("input[type=checkbox]").is(":checked");
+
+        var y=0;
+        if(x){
+          y=1;
+        }
+        $.getJSON($SCRIPT_ROOT + '/delete_user_work', {
+            cur_work:y,
+            st_date:tdWorkStartDate.html(),
+            end_date:tdWorkEndDate.html(),
+            org:tdWorkOrganization.html(),
+            des:tdWorkDesignation.html(),
+            dis:tdWorkDescription.html()
+        }, function(data) {
+            if(data.found==1){
+              par.remove();
+            }
+
+        });
+        return false;
+      });
+
+      $('body').on('click', '.delete_work_row', function() {
+
+        var par = $(this).parent().parent(); //tr
+        par.remove();
+      });
+      $('body').on('click', '.edit_work', function() {
+
+        var par = $(this).parent().parent(); //tr
+        var tdWorkHere = par.children("td:nth-child(1)");
+        var tdWorkStartDate = par.children("td:nth-child(2)");
+        var tdWorkEndDate = par.children("td:nth-child(3)");
+        var tdWorkOrganization = par.children("td:nth-child(4)");
+        var tdWorkDesignation = par.children("td:nth-child(5)");
+        var tdWorkDescription = par.children("td:nth-child(6)");
+        var tdWorkButtons = par.children("td:nth-child(7)");
+        var html_code=''+tdWorkHere.html();
+        var x=tdWorkHere.children("input[type=checkbox]").is(":checked");
+
+        var y=0;
+        if(x){
+          y=1;
+        }
+
+        $.getJSON($SCRIPT_ROOT + '/delete_user_work', {
+            cur_work:y,
+            st_date:tdWorkStartDate.html(),
+            end_date:tdWorkEndDate.html(),
+            org:tdWorkOrganization.html(),
+            des:tdWorkDesignation.html(),
+            dis:tdWorkDescription.html()
+        }, function(data) {
+            if(data.found==1){
+
+              html_code=html_code.replace("disabled=\"true\"","");
+
+
+              if (html_code.indexOf("checked=\"false\"")!=-1){
+                html_code=html_code.replace("checked=\"false\"","");
+              }
+
+              tdWorkHere.html(""+html_code);
+
+
+              html_code="<input type='text' class='datepicker-13' id='datepicker-13' value='"+tdWorkStartDate.html()+"'>";
+
+              tdWorkStartDate.html(html_code);
+
+
+              html_code="<input type='text' class='datepicker-13' id='datepicker-14'value='"+tdWorkEndDate.html()+"'>";
+              tdWorkEndDate.html(html_code);
+              tdWorkOrganization.html("<input type='text' id='txtWorkOrganization' value='"+tdWorkOrganization.html()+"'/>");
+              tdWorkDesignation.html("<input type='text' id='txtWorkHere' value='"+tdWorkDesignation.html()+"'/>");
+              tdWorkDescription.html("<input type='text' id='txtWorkHere' value='"+tdWorkDescription.html()+"'/>");
+              tdWorkButtons.html("<img src='{{url_for('static',filename='images/disk.png')}}' class='btnSaveWork'/>");
+            }
+        });
+        return false;
+      });
+  });
+  </script>
+  <style type="text/css">
+    #save_skill{
+      display: none;
+    }
+    #cancel_skill{
+      display: none;
+    }
+    #table_skill td{
+      width: 50px;
+    }
+    #save_profile{
+      display: none;
+    }
+    #cancel_profile{
+      display: none;
+    }
+
+  </style>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#sub_ay').click(function(){
+        var ay_text=$('#ay').val();
+        $.getJSON($SCRIPT_ROOT + '/submit_user_ay', {
+            ay_text:ay_text
+        }, function(data) {
+            var container = $(document.createElement('div'));
+            var html_code=''+ay_text;
+            container.append(html_code);
+            $('#fake_ay').after(container);
+            $('#div_ay').hide();
+        });
+        return false;
+      });
+    });
+
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#add_edu').click(function(){
+
+        $("#table_edu tbody").append(
+          "<tr>"+
+          "<td><input type='checkbox'/></td>"+
+          "<td><input type='text' class='datepicker-15' id='datepicker-15'></td>"+
+          "<td><input type='text' class='datepicker-15' id='datepicker-16'></td>"+
+          "<td><input type='text'/></td>"+
+          "<td><input type='text'/></td>"+
+          "<td><img src='{{url_for('static',filename='images/disk.png')}}' class='btnSaveedu'><img src='{{url_for('static',filename='images/delete.png')}}' class='delete_edu_row'/></td>"+
+          "</tr>"
+        );
+
+      });
+      $('body').on('click', '.btnSaveedu', function() {
+
+        var par = $(this).parent().parent(); //tr
+        var tdeduHere = par.children("td:nth-child(1)");
+        var tdeduStartDate = par.children("td:nth-child(2)");
+        var tdeduEndDate = par.children("td:nth-child(3)");
+        var tdeduInstitution = par.children("td:nth-child(4)");
+        var tdeduDegree = par.children("td:nth-child(5)");
+        var tdeduButtons = par.children("td:nth-child(6)");
+
+        var x=tdeduHere.children("input[type=checkbox]").is(":checked");
+
+        var y=0;
+        if(x){
+          y=1;
+        }
+        $.getJSON($SCRIPT_ROOT + '/submit_user_edu', {
+            cur_edu:y,
+            st_date:tdeduStartDate.children("input[type=text]").val(),
+            end_date:tdeduEndDate.children("input[type=text]").val(),
+            ins:tdeduInstitution.children("input[type=text]").val(),
+            deg:tdeduDegree.children("input[type=text]").val(),
+        }, function(data) {
+            var html_code="<input type='checkbox' checked='true' disabled='true'/>";
+            if(!(tdeduHere.children("input[type=checkbox]").is(":checked"))){
+
+              html_code=html_code.replace("checked='true'","");
+            }
+            tdeduHere.html(html_code);
+
+            tdeduStartDate.html(tdeduStartDate.children("input[type=text]").val());
+
+            tdeduEndDate.html(tdeduEndDate.children("input[type=text]").val());
+            tdeduInstitution.html(tdeduInstitution.children("input[type=text]").val());
+            tdeduDegree.html(tdeduDegree.children("input[type=text]").val());
+
+            tdeduButtons.html("<img src='{{url_for('static',filename='images/delete.png')}}' class='delete_edu'/><img src='{{url_for('static',filename='images/pencil.png')}}' class='edit_edu'/>");
+
+        });
+        return false;
+      });
+      $('body').on('click', '.delete_edu', function() {
+
+        var par = $(this).parent().parent(); //tr
+        var tdeduHere = par.children("td:nth-child(1)");
+        var tdeduStartDate = par.children("td:nth-child(2)");
+        var tdeduEndDate = par.children("td:nth-child(3)");
+        var tdeduInstitution = par.children("td:nth-child(4)");
+        var tdeduDegree = par.children("td:nth-child(5)");
+        var tdeduButtons = par.children("td:nth-child(6)");
+
+        var x=tdeduHere.children("input[type=checkbox]").is(":checked");
+
+        var y=0;
+        if(x){
+          y=1;
+        }
+        $.getJSON($SCRIPT_ROOT + '/delete_user_edu', {
+            cur_edu:y,
+            st_date:tdeduStartDate.html(),
+            end_date:tdeduEndDate.html(),
+            ins:tdeduInstitution.html(),
+            deg:tdeduDegree.html(),
+        }, function(data) {
+            if(data.found==1){
+              par.remove();
+            }
+
+        });
+        return false;
+      });
+
+      $('body').on('click', '.delete_edu_row', function() {
+
+        var par = $(this).parent().parent(); //tr
+        par.remove();
+      });
+      $('body').on('click', '.edit_edu', function() {
+
+        var par = $(this).parent().parent(); //tr
+        var tdeduHere = par.children("td:nth-child(1)");
+        var tdeduStartDate = par.children("td:nth-child(2)");
+        var tdeduEndDate = par.children("td:nth-child(3)");
+        var tdeduInstitution = par.children("td:nth-child(4)");
+        var tdeduDegree = par.children("td:nth-child(5)");
+        var tdeduButtons = par.children("td:nth-child(6)");
+        var html_code=''+tdeduHere.html();
+        var x=tdeduHere.children("input[type=checkbox]").is(":checked");
+
+        var y=0;
+        if(x){
+          y=1;
+        }
+
+        $.getJSON($SCRIPT_ROOT + '/delete_user_edu', {
+            cur_edu:y,
+            st_date:tdeduStartDate.html(),
+            end_date:tdeduEndDate.html(),
+            ins:tdeduInstitution.html(),
+            deg:tdeduDegree.html()
+        }, function(data) {
+            if(data.found==1){
+
+              html_code=html_code.replace("disabled=\"true\"","");
+
+
+              if (html_code.indexOf("checked=\"false\"")!=-1){
+                html_code=html_code.replace("checked=\"false\"","");
+              }
+
+              tdeduHere.html(""+html_code);
+
+
+              html_code="<input type='text' class='datepicker-15' id='datepicker-15' value='"+tdeduStartDate.html()+"'>";
+
+              tdeduStartDate.html(html_code);
+
+
+              html_code="<input type='text' class='datepicker-15' id='datepicker-16'value='"+tdeduEndDate.html()+"'>";
+              tdeduEndDate.html(html_code);
+              tdeduInstitution.html("<input type='text' id='txteduInstitution' value='"+tdeduInstitution.html()+"'/>");
+              tdeduDegree.html("<input type='text' id='txteduHere' value='"+tdeduDegree.html()+"'/>");
+              tdeduButtons.html("<img src='{{url_for('static',filename='images/disk.png')}}' class='btnSaveedu'/>");
+            }
+        });
+        return false;
+      });
+  });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var container = $(document.createElement('div'));
+      $('#add_profile').click(function(){
+        var html_code='<fieldset id="profile_form"><input class="profile_list" id="automplete-profile"><input id="profile_val" type="text"></fieldset>'
+        $(container).append(html_code);
+        $('#fake_profile').after(container);
+        $('#add_profile').hide();
+        $('#save_profile').show();
+        $('#cancel_profile').show();
+      });
+
+      $('#save_profile').click(function(){
+        var profile_name=''+$('#automplete-profile').val();
+        var profile_value=''+$('#profile_val').val();
+        if(!(profile_value.startsWith("http"))){
+          profile_value='https://'+profile_value;
+        }
+        // alert(profile_value);
+        var text=profile_name+': <a href="'+profile_value+'">'+profile_value+'</a><br/>';
+        // var text=profile_name+': <a href="'+$SCRIPT_ROOT+ profile_value+'">'+profile_value+'</a>';
+        $('#profile_form').remove();
+        availableProfiles = $.grep(availableProfiles, function(value) {
+          return value != profile_name;
+        });
+        var html_code='<fieldset>'+text+'</fieldset>';
+        $(container).append(html_code);
+
+        $('#profile').after(container);
+        $('#add_profile').show();
+        $('#save_profile').hide();
+        $('#cancel_profile').hide();
+        if(availableProfiles.length==0){
+          $('#button_div').hide()
+        }
+        $.getJSON($SCRIPT_ROOT + '/submit_user_social_profile', {
+            profile_name:profile_name,
+            profile_value:profile_value
+        }, function(data) {
+
+        });
+        return false;
+      });
+      $('#cancel_profile').click(function(){
+
+        $('#profile_form').remove();
+        $('#add_profile').show();
+        $('#save_profile').hide();
+        $('#cancel_profile').hide();
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var container = $(document.createElement('div'));
+      $('#add_skill').click(function(){
+
+        var html_code='<input class="skill_list" id="automplete-1">'
+        $(container).append(html_code);
+        $('#skill').after(container);
+        $('#add_skill').hide();
+        $('#save_skill').show();
+        $('#cancel_skill').show();
+      });
+      $('#save_skill').click(function(){
+        var skill=''+$('#automplete-1').val();
+
+        // alert(a[skill]);
+        $.getJSON($SCRIPT_ROOT + '/submit_user_skill', {
+            skill_id:a[skill]
+        }, function(data) {
+            if(data.done==1){
+              var text=''+skill;
+
+              availableTutorials = $.grep(availableTutorials, function(value) {
+                return value != skill;
+              });
+              var html_code='<td>'+skill+'</td';
+              $('#table_skill tr').append(html_code);
+            }
+            else{
+
+              var mess="Enter skill from dropdown";
+              $('.sf-flasherr').sfFlash();
+              var html_code="<div class='sf-flasherr'>"+mess+".</div>";
+              // alert(html_code);
+              $('body').append(html_code);
+              // $('.sf-flasherr').show();
+              alert(mess);
+            }
+
+            // var html_code='<fieldset>'+text+'</fieldset>';
+            // $(container).append(html_code);
+
+            // $('#skill').after(container);
+            $('#automplete-1').remove();
+            $('#add_skill').show();
+            $('#save_skill').hide();
+            $('#cancel_skill').hide();
+        });
+        return false;
+
+      });
+      $('#cancel_skill').click(function(){
+
+        $('#automplete-1').remove();
+        $('#add_skill').show();
+        $('#save_skill').hide();
+        $('#cancel_skill').hide();
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#upload-file-btn').click(function() {
+
+        var form_data = new FormData($('#upload-file')[0]);
+        $.ajax({
+            async: false,
+            url: '/submit_user_resume',
+            data: form_data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function (data) {
+
+              var x=document.getElementById('resume_div');
+              $(x).hide();
+
+              var html_code='<a href="'+$SCRIPT_ROOT+'/uploads/'+data.file_name+'">'+data.file_name+'</a><br/>';
+
+              var container = $(document.createElement('div'));
+              var y=document.getElementById('fake_resume');
+              container.append(html_code);
+              $('#fake_resume').after(container);
+
+              alert("Resume Uploaded");
+            }
+        });
+      });
+    });
+
+  </script>
+
+  <br/>
+  <div class="body_container">
+    <div id="about_yourself">
+      <h3>About Yourself</h3><br>
+      {%if ay_present==0%}
+        <div id="fake_ay">
+        </div>
+        <div id="div_ay">
+          <input type="text" id="ay" ></input>
+          <input type="button" id="sub_ay"value="Submit"> </input>
+        </div>
+      {%else%}
+      <div>
+        {{ay_text}}
+      </div>
+      {%endif%}
+    </div>
+    <div id="work_experience">
+      <h3>Work Experience</h3><br>
+
+      <table id="table_work" border="1">
+        <thead>
+          <tr>
+            <th>I currently work here</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Organization</th>
+            <th>Designation</th>
+            <th>Description</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {%for row in work_list%}
+
+              <tr>
+              {%if row['current_work']%}
+              <td><input type='checkbox' checked="true" disabled="true"/></td>
+              {%else%}
+              <td><input type='checkbox' disabled="true" /></td>
+              {%endif%}
+              <td>{{row['st_date']}}</td>
+              <td>{{row['end_date']}}</td>
+              <td>{{row['org']}}</td>
+              <td>{{row['des']}}</td>
+              <td>{{row['dis']}}</td>
+              <td><img src='{{url_for('static',filename='images/delete.png')}}' class='delete_work'/><img src='{{url_for('static',filename='images/pencil.png')}}' class='edit_work'/></td>
+              </tr>
+          {%endfor%}
+
+        </tbody>
+      </table>
+      <button id="add_work">Add</button>
+    </div>
+    <div id="education">
+      <h3>Education</h3><br>
+      <table id="table_edu" border="1">
+        <thead>
+          <tr>
+            <th>I currently study here</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Institution</th>
+            <th>Degree</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {%for row in edu_list%}
+
+              <tr>
+              {%if row['current_edu']%}
+              <td><input type='checkbox' checked="true" disabled="true"/></td>
+              {%else%}
+              <td><input type='checkbox' disabled="true" /></td>
+              {%endif%}
+              <td>{{row['st_date']}}</td>
+              <td>{{row['end_date']}}</td>
+              <td>{{row['ins']}}</td>
+              <td>{{row['deg']}}</td>
+              <td><img src='{{url_for('static',filename='images/delete.png')}}' class='delete_edu'/><img src='{{url_for('static',filename='images/pencil.png')}}' class='edit_edu'/></td>
+              </tr>
+          {%endfor%}
+
+        </tbody>
+      </table>
+      <button id="add_edu">Add</button>
+
+    </div>
+    <div id="social_profiles">
+        <h3>Social Profiles</h3><br>
+        {%for set in social%}
+          <div>
+            {{set['name']}}: <a href="{{set['value']}}">{{set['value']}}</a><br/>
+          </div>
+        {%endfor%}
+        <div id="fake_profile">
+
+        </div>
+        {%if social|length <3%}
+          <div id="button_div">
+            <input type="button" id="save_profile" value="Save"></input>
+            <input type="button" id="add_profile" value="Add New"></input>
+            <input type="button" id="cancel_profile" value="Cancel"></input>
+          </div>
+        {%endif%}
+
+    </div>
+    <div id="user_skills">
+      <h3>Skills</h3><br>
+      <table id="table_skill">
+      <tbody>
+        <tr>
+        {%for skill_set in skill_list%}
+          <!-- alert(skill_name); -->
+          <td><a href="{{url_for('java_page',skill_id=skill_set['id'])}}">{{skill_set['name']}}</a></td>
+        {%endfor%}
+        </tr>
+      </tbody>
+      </table>
+      <div id="skill">
+      </div>
+      <br/>
+
+      <input type="button" id="save_skill" value="Save"></input>
+      <input type="button" id="add_skill" value="Add New"></input>
+      <input type="button" id="cancel_skill" value="Cancel"></input>
+    </div>
+    <div id="user_resume">
+      <h3>Resume</h3><br>
+      {%if resume_present==0%}
+        <div id="fake_resume">
+        </div>
+        <div id="resume_div">
+          <form id="upload-file" role="form" action="xyz" method="post" enctype="multipart/form-data">
+            <fieldset>
+              <label for="file"><b>Upload document here</b></label>
+              <input type="file" name="file" id="fn">
+              <button id="upload-file-btn" type="button" class="btn btn-primary" data-dismiss="modal" value="Upload">Upload</button>
+            </fieldset>
+          </form>
+        </div>
+      {%else%}
+        <div>
+          <form action="{{url_for('download',filename=resume_dict['file_name'])}}" method="post">
+          <b>{{resume_dict['file_name']}}</b><br/>
+          <input type="submit" value="Download"></input>
+          </form>
+        </div>
+      {%endif%}
+    </div>
+  </div>
+
+  <footer class="footer-basic-centered">
+        <p class="footer-company-motto"><i>Puchhte Jao... Seekhte Jao...</i></p>
+
+      <p class="footer-company-name">Puchho.com &copy; 2016. All rights reserved</p>
+
+    </footer>
+  <br/><br/><br/><br/>
+  <script src= "{{ url_for('static',filename='js/jquery.sf-flash.js') }}"></script>
+</body>
+
+</html>
+

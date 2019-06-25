@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Puchho</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Tab Widget Form template Responsive, Login form web template,Flat Pricing tables,Flat Drop downs  Sign up Web Templates, Flat Web Templates, Login sign up Responsive web template, SmartPhone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+
+	<link href= "{{ url_for('static',filename='css/header_footer.css') }}" rel="stylesheet" type="text/css" media="all" />
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+	<link href= "{{ url_for('static',filename='css/puchho.css') }}" rel="stylesheet" type="text/css" media="all" />
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+      <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <style type="text/css">
+
+  		#save_skill{
+  			display: none;
+  		}
+  		#cancel_skill{
+  			display: none;
+  		}
+  		#save_doc{
+  			display: none;
+  		}
+  		#cancel_doc{
+  			display: none;
+  		}
+  		#hidden_skills{
+  			display: none;
+  		}
+
+  	</style>
+
+
+	<script type="text/javascript">
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+
+	<script type="application/x-javascript">
+		addEventListener("load", function() {
+			setTimeout(hideURLbar, 0);
+		}, false); function hideURLbar(){
+			window.scrollTo(0,1);
+		}
+	</script>
+
+	<script src= "{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+	<script src= "{{ url_for('static',filename='js/easyResponsiveTabs.js') }}" type="text/javascript"></script>
+
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='js/autocomplete.js')}}">
+
+	</script>
+	<script>
+		var a={};
+		a["C"] = 1;
+		a["C++"] =2;
+		a["Java"] = 3;
+		a["Python"] =4;
+		var availableTutorials = [
+  				"C",
+               	"C++",
+               	"Java",
+               	"Python",
+        ];
+        var globalTutorials = [
+  				"C",
+               	"C++",
+               	"Java",
+               	"Python",
+        ];
+        var b=[];
+
+        var availableTags = [
+  				"C",
+               	"C++",
+               	"Java",
+               	"Python",
+        ];
+        var globalTags = [
+  				"C",
+               	"C++",
+               	"Java",
+               	"Python",
+        ];
+        var c=[];
+    </script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			$(document).on("click",".skill_list",function(){
+				$( "#automplete-1" ).autocomplete({
+	               source: availableTutorials
+	            });
+  			});
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(document).on("click",".doc_list",function(){
+  				$( "#automplete-2" ).autocomplete({
+	               source: availableTags
+	            });
+  			});
+		});
+	</script>
+
+	<script type="text/javascript">
+  		$(document).ready(function() {
+  			var container = $(document.createElement('div'));
+  			$(container).attr('id','hidden_field');
+  			// container.id="hidden_field";
+  			$('#add_skill').click(function(){
+  				var html_code='<input class="skill_list" id="automplete-1">'
+  				$(container).append(html_code);
+  				$('#skill').after(container);
+  				$('#add_skill').hide();
+  				$('#save_skill').show();
+  				$('#cancel_skill').show();
+  			});
+
+  			$('#save_skill').click(function(){
+  				var skill=''+$('#automplete-1').val();
+  				// alert(skill);
+  				b.push(a[skill]);
+  				// alert(b);
+  				var text=''+skill;
+  				$('#automplete-1').remove();
+  				availableTutorials = $.grep(availableTutorials, function(value) {
+				  return value != skill;
+				});
+  				var html_code='<fieldset>'+text+'</fieldset>';
+  				$(container).append(html_code);
+
+  				$('#skill').after(container);
+  				$('#add_skill').show();
+  				$('#save_skill').hide();
+  				$('#cancel_skill').hide();
+
+  			});
+  			$('#cancel_skill').click(function(){
+
+  				$('#automplete-1').remove();
+  				$('#add_skill').show();
+  				$('#save_skill').hide();
+  				$('#cancel_skill').hide();
+  			});
+  		});
+  	</script>
+
+  	<script type="text/javascript">
+  		$(document).ready(function() {
+  			var container1 = $(document.createElement('div'));
+  			$(container1).attr('id','hidden_field1');
+  			// container1.id="hidden_field1";
+  			$('#add_doc').click(function(){
+  				var html_code='<input class="doc_list" id="automplete-2">'
+  				$(container1).append(html_code);
+  				$('#doc').after(container1);
+  				$('#add_doc').hide();
+  				$('#save_doc').show();
+  				$('#cancel_doc').show();
+  			});
+
+  			$('#save_doc').click(function(){
+  				var doc=''+$('#automplete-2').val();
+  				// alert(doc);
+  				c.push(a[doc]);
+  				// alert(b);
+  				var text=''+doc;
+  				$('#automplete-2').remove();
+  				availableTags = $.grep(availableTags, function(value) {
+				  return value != doc;
+				});
+  				var html_code='<fieldset>'+text+'</fieldset>';
+  				$(container1).append(html_code);
+
+  				$('#doc').after(container1);
+  				$('#add_doc').show();
+  				$('#save_doc').hide();
+  				$('#cancel_doc').hide();
+
+  			});
+  			$('#cancel_doc').click(function(){
+
+  				$('#automplete-2').remove();
+  				$('#add_doc').show();
+  				$('#save_doc').hide();
+  				$('#cancel_doc').hide();
+  			});
+  		});
+  	</script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#horizontalTab').easyResponsiveTabs({
+				type: 'default', //Types: default, vertical, accordion
+				width: 'auto', //auto or any width like 600px
+				fit: true   // 100% fit in a container
+			});
+			$('#horizontalTab1').easyResponsiveTabs({
+				type: 'default', //Types: default, vertical, accordion
+				width: 'auto', //auto or any width like 600px
+				fit: true   // 100% fit in a container
+			});
+		});
+	</script>
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+
+			$('#submit').click(function(){
+
+				var json_string = JSON.stringify(b);
+  				$.getJSON($SCRIPT_ROOT + '/submit_user_post', {
+					pos: $('#post_mess').val(),
+					ski: json_string
+		      	}, function(data) {
+
+		      		var x=document.getElementById('post_mess');
+		      		var pre_post=$(x).val();
+		      		var y=document.getElementById('hidden_field');
+
+		      		$(x).val("");
+		      		$(y).empty();
+		      		$(y).remove();
+		      		availableTutorials=globalTutorials;
+		      		b=[];
+
+		      		var container = $(document.createElement('div'));
+
+		      		var html_code='<a href="'+$SCRIPT_ROOT+'/query/'+data.query_id+'/'+data.visible+'"><h4>'+pre_post+'</h4></a><hr/><br/>';
+
+		      		$(container).append(html_code);
+
+      				$('#new_query').after(container);
+
+		    	});
+		    	return false;
+  			});
+      	});
+	</script>
+	<!--
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+			$('#upload-file-btn').click(function() {
+				var json_string = JSON.stringify(c);
+		  //       // alert(json_string);
+				$.getJSON($SCRIPT_ROOT + '/submit_user_doc', {
+					pos: $('#fn').val(),
+					title:$('#title').val()
+					ski: json_string
+		      	}, function(data) {
+
+
+		      		var x=document.getElementById('fn');
+		      		var pre_doc=$(x).val();
+		      		var y=document.getElementById('hidden_field1');
+		      		var z=document.getElementById('title');
+		      		$(x).val("");
+		      		$(z).val("");
+		      		$(y).empty();
+		      		$(y).remove();
+		      		availableTags=globalTags;
+		      		c=[];
+		      		alert("Document Uploaded");
+
+
+		    	});
+		    	return false;
+			});
+		});
+	</script>
+	-->
+	<script type="text/javascript">
+		$(function() {
+		    $('#upload-file-btn').click(function() {
+
+		    	var json_string = JSON.stringify(c);
+		    	$('#hidden_skills').attr('value',json_string);
+		        var myform = document.getElementById("upload-file");
+		        var mydata= new FormData(myform);
+		        $('#hidden_skills').attr('value','');
+		         $.ajax({
+		         	async: false,
+			        url: '/submit_user_doc',
+			        data: mydata,
+			        cache: false,
+			        processData: false,
+			        contentType: false,
+			        type: 'POST',
+			        success: function (dataofconfirm) {
+			            // do something with the result
+			            var x=document.getElementById('fn');
+			      		var y=document.getElementById('hidden_field1');
+			      		var z=document.getElementById('title');
+			      		$(z).val("");
+			      		$(x).val("");
+			      		$(y).empty();
+			      		$(y).remove();
+			      		availableTags=globalTags;
+			      		c=[];
+			      		alert("Document Uploaded");
+			        }
+			    });
+		        // $.ajax({
+		        //     type: 'POST',
+		        //     url: '/uploadajax',
+		        //     data: JSON.stringify(mydata, null, '\t'),
+		        //     contentType: 'application/json;charset=UTF-8',
+		        //     cache: false,
+		        //     processData: false,
+		        //     async: false,
+		        //     success: function(data) {
+		        //  //    	var x=document.getElementById('fn');
+			      	// 	// var pre_doc=$(x).val();
+			      	// 	// var y=document.getElementById('hidden_field1');
+			      	// 	// var z=document.getElementById('title');
+			      	// 	// $(x).val("");
+			      	// 	// $(z).val("");
+			      	// 	// $(y).empty();
+			      	// 	// $(y).remove();
+			      	// 	// availableTags=globalTags;
+			      	// 	// c=[];
+			      	// 	// alert("Document Uploaded");
+			      	// 	console.log('Success!');
+		        //     },
+		        // });
+		  //
+		    });
+		});
+	</script>
+
+<!--//js-->
+</head>
+<body>
+	<header class="header-user-dropdown">
+
+		<div class="header-limiter">
+			<h1><a href="{{url_for('puchho',user_id=session['user_id'])}}">Puchho.com</a></h1>
+
+			<nav>
+				<a href="{{url_for('seekho')}}">SEEKHO CORNER</a>
+
+			</nav>
+			<nav>
+				<a href="{{url_for('about_us')}}">ABOUT US</a>
+
+			</nav>
+			<nav>
+
+     			<a href="#">FAQ</a>
+
+			</nav>
+			<nav>
+				<a href="{{url_for('contact_us')}}">CONTACT</a>
+			</nav>
+			<div class="header-user-menu">
+				{% if session['username'] %}
+					<h4>{{session['username']}}</h4>
+					<ul>
+
+						<li><a href="{{url_for('dashboard',user_id=session['user_id'])}}">Dashboard<span id="icon" class="octicon octicon-graph"></span></a></li>
+			            <li><a href="{{url_for('account_settings',user_id=session['user_id'])}}">Account Settings <span id="icon" class="octicon octicon-cloud-upload"></span></a></li>
+			            <li><a href="{{url_for('logout')}}">Log Out <span id="icon" class="octicon octicon-pencil"></span></a></li>
+					</ul>
+				{%else%}
+					<a href="{{url_for('login_form')}}">Login/Sign Up</a>
+					<!-- <form action="login_form">
+						<button type="submit">Login</button>
+					</form> -->
+				{%endif%}
+
+
+			</div>
+
+		</div>
+
+	</header>
+
+
+	<div class="body_container">
+
+
+		<div class="main">
+			<!-- <h1>User Log</h1> -->
+			<div class="one">
+			<!--div class="main-info" align="left"-->
+				<div class="sap_tabs">
+					<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
+						<ul class="resp-tabs-list">
+							<li class="resp-tab-ite" aria-controls="tab_item-0" role="tab"><span>Post a Query</span></li>
+							<li class="resp-tab-ite" aria-controls="tab_item-1" role="tab"><span>Upload Document</span></li>
+							<div class="clear"> </div>
+						</ul>
+						<div class="resp-tabs-container">
+							<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
+								<div class="login-top">
+
+									<fieldset>
+										<div class="modal-body">
+										<div class="four">
+										<label>Type Here</label><br>
+										<textarea type="text" id="post_mess" id="post" rows="4" style="width:98%;height:25%;"></textarea>
+										<br/><br/>
+										<fieldset>
+											<label>Category</label><br>
+											<div id="skill">
+											</div>
+											<br/>
+											<input type="button" class="btn btn-primary" id="save_skill" value="Save"></input>
+											<input type="button" class="btn btn-primary" id="add_skill" value="Add New"></input>
+											<input type="button" class="btn btn-primary" id="cancel_skill" value="Cancel"></input>
+										</fieldset>
+										</div>
+										</div>
+										<br/>
+										<div class="modal-footer">
+											<input type="button" id="submit" class="btn btn-primary" data-dismiss="modal" value="Post" />
+										</div>
+									</fieldset>
+								</div>
+							</div>
+							<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
+								<div class="login-top sign-top">
+									<fieldset>
+										<form id="upload-file" role="form" action="kuchbhi" method="post" enctype="multipart/form-data">
+										    <div class="modal-body">
+											<div class="four">
+										    	<label>Brief Title</label>
+										    	<input type="text" id="title" name="title"></input>
+										        <label for="file"><b>Upload document here</b></label>
+										        <input type="text" id="hidden_skills" name="hidden_skills"></input>
+										        <input type="file" class="btn btn-primary" name="file" id="fn">
+
+
+										    <fieldset><br/>
+												<label>Category</label>
+												<div id="doc">
+												</div><BR/>
+												<input type="button" class="btn btn-primary" id="save_doc" value="Save"></input>
+												<input type="button" class="btn btn-primary" id="add_doc" value="Add New"></input>
+												<input type="button" class="btn btn-primary" id="cancel_doc" value="Cancel"></input>
+											</fieldset>
+											</div>
+											</div>
+										    <div class="modal-footer">
+										        <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+										        <button id="upload-file-btn" type="button" class="btn btn-primary" data-dismiss="modal" value="Upload">Upload</button>
+										    </div>
+										</form>
+
+
+							        	<!-- <input type="button" id="submit" value="Submit now" /> -->
+									</fieldset>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clear"> </div>
+				</div>
+
+			<!--/div-->
+
+			</div>
+
+			<div class="two" align="center">
+
+			<!--div class="main-info2" align="left"-->
+				<h3><p style="color:white;text-align:center;margin-top:20px;vertical-align:center;">Skills</p></h3>
+				{%for temp_skill in user_skill_list%}
+					<span>
+						<a href="{{url_for('java_page',skill_id=temp_skill['id'])}}">{{temp_skill['name']}}</a>
+					</span>
+				{%endfor%}
+				<div class="user-skill" align="left">
+				<a href="{{url_for('profile',user_id=session['user_id'])}}">Add Skill</a>
+				</div>
+			<!--/div-->
+			</div>
+		</div>
+
+		<div class="main2">
+			<div class="main-info3">
+				<div class="sap_tabs">
+					<div id="horizontalTab1" style="display: block; width: 100%; margin: 0px;">
+						<ul class="resp-tabs-list">
+							<li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>Asked Questions</span></li>
+							<li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>Answered Questions</span></li>
+							<div class="clear"> </div>
+						</ul>
+						<div class="resp-tabs-container">
+							<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
+								<div class="login-top">
+									<div id=
+									"new_query">
+									</div>
+									<div>
+										{%for pquery in user_query_list%}
+											<div>
+												<a href="{{url_for('query',query_id=pquery['query']['id'],visible=pquery['visible'])}}">
+												<h4>{{pquery['query']['message']}}</h4></a><hr>
+												<br>
+											</div>
+										{%endfor%}
+									</div>
+								</div>
+							</div>
+							<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
+								<div class="login-top sign-top">
+									<div>
+										{%for pquery in answered_query%}
+											<div>
+												<a href="{{url_for('query',query_id=pquery['id'],visible=1)}}">
+												<h4>{{pquery['message']}}</h4></a><hr>
+												<br>
+											</div>
+										{%endfor%}
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clear"> </div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+
+
+
+
+	</div>
+	<footer class="footer-basic-centered">
+        <p class="footer-company-motto"><i>Puchhte Jao... Seekhte Jao...</i></p>
+
+    	<p class="footer-company-name">Puchho.com &copy; 2016. All rights reserved</p>
+
+  	</footer>
+</body>
+</html>

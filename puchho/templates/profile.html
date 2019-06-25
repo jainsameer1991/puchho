@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <title>User Dropdown Header</title>
+      <link href= "{{ url_for('static',filename='css/header_footer.css') }}" rel="stylesheet" type="text/css" media="all" />
+
+      <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+      <!-- <link href= "{{ url_for('static',filename='css/style.css') }}" rel="stylesheet" type="text/css" media="all" /> -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href= "{{ url_for('static',filename='css/menu.css') }}" rel="stylesheet" type="text/css" media="all" />
+  <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+  <script type="text/javascript"   src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript" src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+
+      <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <script type="text/javascript">
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  </head>
+
+<body>
+
+  <header class="header-user-dropdown">
+
+    <div class="header-limiter">
+      <h1><a href="{{url_for('puchho',user_id=session['user_id'])}}">Puchho.com</a></h1>
+
+      <nav>
+        <a href="{{url_for('seekho')}}">SEEKHO CORNER</a>
+
+      </nav>
+      <nav>
+        <a href="{{url_for('about_us')}}">ABOUT US</a>
+
+      </nav>
+      <nav>
+
+          <a href="#">FAQ</a>
+
+      </nav>
+      <nav>
+        <a href="{{url_for('contact_us')}}">CONTACT</a>
+      </nav>
+      <div class="header-user-menu">
+        {% if session['username'] %}
+          <h4>{{session['username']}}</h4>
+          <ul>
+
+            <li><a href="{{url_for('dashboard',user_id=session['user_id'])}}">Dashboard<span id="icon" class="octicon octicon-graph"></span></a></li>
+                  <li><a href="{{url_for('account_settings',user_id=session['user_id'])}}">Account Settings <span id="icon" class="octicon octicon-cloud-upload"></span></a></li>
+                  <li><a href="{{url_for('logout')}}">Log Out <span id="icon" class="octicon octicon-pencil"></span></a></li>
+          </ul>
+        {%else%}
+          <a href="{{url_for('login_form')}}">Login/Sign Up</a>
+          <!-- <form action="login_form">
+            <button type="submit">Login</button>
+          </form> -->
+        {%endif%}
+
+
+      </div>
+
+    </div>
+
+  </header>
+  <style type="text/css">
+    #table_skill td{
+      width: 50px;
+    }</style>
+  <script>
+
+    $(document).ready(function(){
+
+      var userMenu = $('.header-user-dropdown .header-user-menu');
+
+      userMenu.on('touchend', function(e){
+
+        userMenu.addClass('show');
+
+        e.preventDefault();
+        e.stopPropagation();
+
+      });
+
+      // This code makes the user dropdown work on mobile devices
+
+      $(document).on('touchend', function(e){
+
+        // If the page is touched anywhere outside the user menu, close it
+        userMenu.removeClass('show');
+
+      });
+
+    });
+
+  </script>
+
+
+  <div class="body_container">
+    <div id="about_yourself">
+      <h3>About {{user_name}}</h3><br>
+      {%if ay_present==1%}
+            <div>
+                  {{ay_text}}
+            </div>
+      {%endif%}
+    </div>
+    {%if work_list|length > 0%}
+    <div id="work_experience">
+      <h3>Work Experience</h3><br>
+
+      {%for row in work_list%}
+      <table>
+            <thead></thead>
+            <tbody>
+            <tr>
+                  <td>
+                        {%if row['cur_work']%}
+                              (Currently works here)
+                        {%endif%}
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        <label>Start Date:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['st_date']}}&nbsp;
+                  </td>
+                  <td>
+                        <label>End Date:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['end_date']}}
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        <label>Organization:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['org']}}&nbsp;
+                  </td>
+                  <td>
+                        <label>Designation:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['des']}}&nbsp;
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        <label>Description:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['dis']}}
+                  </td>
+            </tr>
+            </tbody>
+      </table><br/>
+      {%endfor%}
+
+    </div>
+    {%endif%}
+    {%if edu_list|length > 0%}
+    <div id="education">
+      <h3>Education</h3><br>
+
+      {%for row in edu_list%}
+      <table>
+            <thead></thead>
+            <tbody>
+            <tr>
+                  <td>
+                        {%if row['cur_edu']%}
+                              (Currently studies here)
+                        {%endif%}
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        <label>Start Date:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['st_date']}}&nbsp;
+                  </td>
+                  <td>
+                        <label>End Date:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['end_date']}}
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        <label>Institution:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['ins']}}&nbsp;
+                  </td>
+                  <td>
+                        <label>Degree:&nbsp;</label>
+                  </td>
+                  <td>
+                        {{row['deg']}}&nbsp;
+                  </td>
+            </tr>
+            </tbody>
+      </table><br/>
+      {%endfor%}
+
+    </div>
+    {%endif%}
+    <div id="social_profiles">
+        <h3>Social Profiles</h3><br>
+        {%for set in social%}
+          <div>
+            {{set['name']}}: <a href="{{set['value']}}">{{set['value']}}</a><br/>
+          </div>
+        {%endfor%}
+
+
+
+    </div>
+    <div id="user_skills">
+      <h3>Skills</h3><br>
+      <table id="table_skill">
+      <tbody>
+        <tr>
+        {%for skill_set in skill_list%}
+          <!-- alert(skill_name); -->
+          <td>{{skill_set['name']}}</td>
+        {%endfor%}
+        </tr>
+      </tbody>
+      </table>
+      <div id="skill">
+      </div>
+      <br/>
+
+
+    </div>
+    <div id="user_resume">
+      <h3>Resume</h3><br>
+      {%if resume_present==0%}
+
+      {%else%}
+        <div>
+          <form action="{{url_for('download',filename=resume_dict['file_name'])}}" method="post">
+          <b>{{resume_dict['file_name']}}</b><br/>
+          <input type="submit" value="Download"></input>
+          </form>
+        </div>
+      {%endif%}
+    </div>
+  </div>
+  <footer class="footer-basic-centered">
+      <p class="footer-company-motto"><i>Puchhte Jao... Seekhte Jao...</i></p>
+
+    <p class="footer-company-name">Puchho.com &copy; 2016. All rights reserved</p>
+
+  </footer>
+</body>
+
+</html>
+
